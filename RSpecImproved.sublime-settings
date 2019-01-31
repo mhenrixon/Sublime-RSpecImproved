@@ -1,0 +1,14 @@
+{
+  "name": "Quotes",
+  "settings": {
+    "shellVariables": [
+      {
+        "name": "TM_QUOTE",
+        "value": "\""
+      }
+    ]
+  },
+  "ignored_directories": [".git", "vendor", "tmp", "migrate"],
+  "spec_folder": "spec",
+  "ignored_spec_path_building_directories": ["app", "lib", "source/app", "source/lib"]
+}
