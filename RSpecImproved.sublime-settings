@@ -1,14 +1,8 @@
 {
-  "name": "Quotes",
-  "settings": {
-    "shellVariables": [
-      {
-        "name": "TM_QUOTE",
-        "value": "\""
-      }
-    ]
-  },
+  // Ignore the following directories
   "ignored_directories": [".git", "vendor", "tmp", "migrate"],
+  // Change if you are using another spec_folder than "spec"
   "spec_folder": "spec",
+  // Add paths here to ignore those folders when creating the spec file
   "ignored_spec_path_building_directories": ["app", "lib", "source/app", "source/lib"]
 }
