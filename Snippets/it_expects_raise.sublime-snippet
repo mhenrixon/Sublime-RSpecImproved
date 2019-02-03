@@ -1,0 +1,12 @@
+<snippet>
+  <content><![CDATA[
+let(:error_class) { ${1:error} }
+let(:error_message) do
+  "${2:message}"
+end
+
+it! { is_expected.to raise_error(error_class, error_message) }
+]]></content>
+  <tabTrigger>ier</tabTrigger>
+  <scope>source.ruby.rspec</scope>
+</snippet>
