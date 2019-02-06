@@ -3,7 +3,7 @@ import re
 import os
 
 def log(message):
-  print("=> Better RSpec: %s" % (message))
+  print("=> RSpec Improved: %s" % (message))
 
 CREATE_IMPLEMENTATION_FILE_MESSAGE = """
 The implementation file doesn't exist.
@@ -20,8 +20,7 @@ require "spec_helper"
 
 RSpec.describe  do
   describe "" do
-    it do
-    end
+    it { is_expected.to eq() }
   end
 end
 
@@ -32,8 +31,7 @@ require "rails_helper"
 
 RSpec.describe  do
   describe "" do
-    it do
-    end
+    it { is_expected.to eq() }
   end
 end
 

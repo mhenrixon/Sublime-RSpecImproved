@@ -1,7 +1,7 @@
 %YAML 1.2
 ---
 # http://www.sublimetext.com/docs/3/syntax.html
-name: RSpecImproved
+name: RSpec Improved
 file_extensions:
   - _spec.rb
 scope: source.ruby.rspec
@@ -18,7 +18,7 @@ contexts:
     - include: subject-variable
     - include: scope:source.ruby
   behaviour:
-    - match: ^\s*(describe|context|feature)\b
+    - match: ^\s*(describe|specify|it|context|feature)\b
       captures:
         1: keyword.other.rspec.behaviour
       push:
@@ -29,7 +29,7 @@ contexts:
           pop: true
         - include: scope:source.ruby
   example:
-    - match: ^\s*(it|is_expected|specify|scenario|example|xit)\b
+    - match: ^\s*(it|are_expected|is_expected|specify|scenario|example|xit)\b
       captures:
         1: keyword.other.rspec.example
       push:
@@ -40,17 +40,17 @@ contexts:
           pop: true
         - include: scope:source.ruby
   other:
-    - match: \b(expect|double|described_class|allow|expect_any_instance_of|allow_any_instance_of|is_expected)\b
+    - match: \b(expect|double|described_class|allow|expect_any_instance_of|allow_any_instance_of|are_expected|is_expected)\b
       captures:
         1: keyword.other.rspec
   pending:
-    - match: ^\s*(it|is_expected|specify|scenario|example)\s+(.*\S)\s*(?<!do)\s*$
+    - match: ^\s*(it|are_expected|is_expected|specify|scenario|example)\s+(.*\S)\s*(?<!do)\s*$
       scope: meta.rspec.pending
       captures:
         1: keyword.other.rspec.pending
         2: string.ruby
   single-line-example:
-    - match: '^\s*(it|is_expected|specify|scenario|example)\s*{'
+    - match: '^\s*(it|are_expected|is_expected|specify|scenario|example)\s*{'
       captures:
         1: keyword.other.rspec.example
   subject:

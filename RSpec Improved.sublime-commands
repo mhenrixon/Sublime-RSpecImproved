@@ -1,0 +1,23 @@
+[
+  { "caption": "RSpec Improved: Preferences",
+    "command": "edit_settings",
+    "args": {
+      "base_file": "${packages}/RSpec Improved/RSpec Improved.sublime-settings",
+      "default": "{\n\t$0\n}\n"
+    }
+  },
+  { "caption": "RSpec Improved: Key Bindings",
+    "command": "edit_settings",
+    "args": {
+      "base_file": "${packages}/RSpec Improved/Default.sublime-keymap",
+      "default": "[\n\t$0\n]\n"
+    }
+  },
+  { "caption": "RSpec Improved: Readme",
+    "command": "open_file",
+    "args": {
+      "file": "${packages}/RSpec Improved/README.md"
+    }
+  },
+  { "caption": "RSpec Improved: RSpec Toggle", "command": "rspec_toggle" },
+]
