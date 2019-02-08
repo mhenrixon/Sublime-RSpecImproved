@@ -1,13 +1,13 @@
 %YAML 1.2
 ---
 # http://www.sublimetext.com/docs/3/syntax.html
-name: RSpec
+name: RSpec Improved
 file_extensions:
-  - _spec.rb
+  - spec.rb
 scope: source.ruby.rspec
 contexts:
   main:
-    - match: '(?<!\.)\b(before|after|around|shared_examples|shared_context|it_behaves_like|include_examples|it_should_behave_like|it_has_behavior)\b(?![?!])'
+    - match: (?<!\.)\b(before\b|after\b|subject\b!?|let\b!?)
       scope: keyword.other.rspec
     - include: behaviour
     - include: single-line-example
@@ -18,45 +18,57 @@ contexts:
     - include: subject-variable
     - include: scope:source.ruby
   behaviour:
-    - match: ^\s*(describe|specify|it|context|feature)\b
+    - match: ^\s*(?:(RSpec)\.)?(describe|context|feature)\b
       captures:
-        1: keyword.other.rspec.behaviour
+        1: support.class.ruby
+        2: keyword.other.rspec.behaviour
       push:
         - meta_scope: meta.rspec.behaviour
-        - match: \b(do)\s*$
+        - match: '\b(do(?=\s*$))|{'
           captures:
             1: keyword.control.ruby.start-block
           pop: true
         - include: scope:source.ruby
   example:
-    - match: ^\s*(it|are_expected|is_expected|specify|scenario|example|xit)\b
+    - match: ^\s*(it|specify|scenario)\b
       captures:
         1: keyword.other.rspec.example
       push:
         - meta_scope: meta.rspec.example
-        - match: \b(do)\s*$
+        - match: '\b(do(?=\s*$))|{'
           captures:
             1: keyword.control.ruby.start-block
           pop: true
         - include: scope:source.ruby
+  pending:
+    - match: '^\s*(it|specify|scenario)\b(?=((?!do|{).)*$)'
+      captures:
+        1: keyword.other.rspec.pending
+        2: string.ruby
+      push:
+        - meta_scope: meta.rspec.pending
+        - match: $
+          pop: true
+        - include: scope:source.ruby
+  single-line-example:
+    - match: '^\s*(it|specify|scenario)\s*{'
+      captures:
+        1: keyword.other.rspec.example
   other:
     - match: \b(expect|double|described_class|allow|expect_any_instance_of|allow_any_instance_of|are_expected|is_expected)\b
       captures:
         1: keyword.other.rspec
-  pending:
-    - match: ^\s*(it|are_expected|is_expected|specify|scenario|example)\s+(.*\S)\s*(?<!do)\s*$
-      scope: meta.rspec.pending
-      captures:
-        1: keyword.other.rspec.pending
-        2: string.ruby
-  single-line-example:
-    - match: '^\s*(it|are_expected|is_expected|specify|scenario|example)\s*{'
-      captures:
-        1: keyword.other.rspec.example
   subject:
     - match: '\b(subject!?|let!?|its)(?:\s*[({])'
       captures:
-        1: keyword.other.rspec
+        1: keyword.other.rspec.example
+      push:
+        - meta_scope: meta.rspec.example
+        - match: '\b(do(?=\s*$))|{'
+          captures:
+            1: keyword.control.ruby.start-block
+          pop: true
+        - include: scope:source.ruby
   subject-variable:
     - match: '\b(subject|let|described_class)(?!\s*[{(])\b'
       captures:
