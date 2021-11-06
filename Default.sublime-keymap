@@ -1,4 +1,0 @@
-[
-  /* Jump between RSpec and implementation */
-	{ "keys": ["super+."], "command": "rspec_toggle" }
-]

@@ -1,8 +1,4 @@
 [
-  {
-    "caption": "RSpec Improved: Ttoggle test/implementation file",
-    "command": "rspec_toggle"
-  },
   { "caption": "RSpec Improved: Preferences",
     "command": "edit_settings",
     "args": {
@@ -13,11 +9,15 @@
   { "caption": "RSpec Improved: Key Bindings",
     "command": "edit_settings",
     "args": {
-      "base_file": "${packages}/RSpec Improved/Default.sublime-keymap",
+      "base_file": "${packages}/RSpec Improved/RSpec Improved.sublime-keymap",
       "default": "[\n\t$0\n]\n"
     }
   },
-  { "caption": "RSpec Improved: Readme",
+  {
+    "caption": "RSpec Improved: Toggle Spec",
+    "command": "rspec_toggle"
+  },
+  { "caption": "RSpec Improved: Open Readme",
     "command": "open_file",
     "args": {
       "file": "${packages}/RSpec Improved/README.md"
