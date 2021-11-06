@@ -1,4 +1,8 @@
 [
+  {
+    "caption": "RSpec Improved: Ttoggle test/implementation file",
+    "command": "rspec_toggle"
+  },
   { "caption": "RSpec Improved: Preferences",
     "command": "edit_settings",
     "args": {
@@ -19,5 +23,4 @@
       "file": "${packages}/RSpec Improved/README.md"
     }
   },
-  { "caption": "RSpec Improved: RSpec Toggle", "command": "rspec_toggle" },
 ]
