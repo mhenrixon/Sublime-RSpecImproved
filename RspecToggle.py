@@ -11,7 +11,7 @@ end
 """
 
 DESCRIBE_TEMPLATE = """
-  describe '%s' do
+  describe "%s" do
     it do
     end
   end

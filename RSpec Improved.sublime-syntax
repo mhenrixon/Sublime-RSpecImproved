@@ -1,75 +1,100 @@
 %YAML 1.2
 ---
-# http://www.sublimetext.com/docs/3/syntax.html
+# https://www.sublimetext.com/docs/syntax.html
 name: RSpec Improved
 file_extensions:
   - spec.rb
 scope: source.ruby.rspec
+
+extends: Packages/Ruby/Ruby.sublime-syntax
+
+variables:
+  identifier: '\b[[:alpha:]_][[:alnum:]_]*\b'
+  method_punctuation: '(?:[?!]|=(?![>=]))?'
+  method_name: '{{identifier}}{{method_punctuation}}'
+  
 contexts:
   main:
+    - include: rspec-expressions
+    - include: embedded-expressions
+  
+  embedded-expressions:
+    - include: rspec-expressions
+    - include: expressions
+  
+  rspec-expressions:
     - match: '(?<!\.)\b(before|after|around|shared_examples|shared_examples_for|shared_context|include_context|it_behaves_like|include_examples|it_should_behave_like|it_has_behavior)\b(?![?!])'
-      scope: keyword.other.rspec
+      scope: support.function.rspec.ruby
     - include: behaviour
     - include: single-line-example
     - include: pending
     - include: example
-    - include: other
+    - include: matchers
     - include: subject
     - include: subject-variable
-    - include: scope:source.ruby
+  
   behaviour:
     - match: ^\s*(?:(RSpec)\.)?(describe|context|feature)\b
       captures:
         1: support.class.ruby
-        2: keyword.other.rspec.behaviour
+        2: keyword.control.rspec.behaviour.ruby
       push:
-        - meta_scope: meta.rspec.behaviour
+        - meta_scope: meta.rspec.behaviour.ruby
         - match: '\b(do(?=\s*$))|{'
           captures:
             1: keyword.control.ruby.start-block
           pop: true
-        - include: scope:source.ruby
+        - include: embedded-expressions
+  
   example:
     - match: ^\s*(it|specify|scenario)\b
       captures:
-        1: keyword.other.rspec.example
+        1: keyword.control.rspec.example.ruby
       push:
-        - meta_scope: meta.rspec.example
+        - meta_scope: meta.rspec.example.ruby
         - match: '\b(do(?=\s*$))|{'
           captures:
             1: keyword.control.ruby.start-block
           pop: true
-        - include: scope:source.ruby
+        - include: embedded-expressions
+  
   pending:
-    - match: '^\s*(it|specify|scenario)\b(?=((?!do|{).)*$)'
+    - match: '^\s*(it|specify|scenario|xdescribe|xcontext|xit)\b(?=((?!do|{).)*$)'
       captures:
-        1: keyword.other.rspec.pending
+        1: keyword.control.rspec.pending.ruby
         2: string.ruby
       push:
-        - meta_scope: meta.rspec.pending
+        - meta_scope: meta.rspec.pending.ruby
         - match: $
           pop: true
-        - include: scope:source.ruby
+        - include: embedded-expressions
+  
   single-line-example:
     - match: '^\s*(it|specify|scenario)\s*{'
       captures:
-        1: keyword.other.rspec.example
-  other:
+        1: keyword.control.rspec.example.ruby
+  
+  matchers:
     - match: \b(expect|double|described_class|allow|expect_any_instance_of|allow_any_instance_of|are_expected|is_expected)\b
-      captures:
-        1: keyword.other.rspec
+      scope: support.function.rspec.ruby
+    - match: \b(to|to_not|not_to|and|and_not|or|or_not)\b
+      scope: keyword.operator.rspec.ruby
+    - match: \b(be_a|be_an|be_truthy|be_falsey|be_nil|be_empty|be|eq|eql|equal|match|include|have_attributes|raise_error|change|respond_to|have_received|receive|satisfy)\b
+      scope: support.function.matcher.rspec.ruby
+  
   subject:
-    - match: '\b(subject!?|let!?|its)(?:\s*[({])'
+    - match: '\b(subject!?|let!?|its)\s*(?=\(|{|do\b)'
       captures:
-        1: keyword.other.rspec.example
+        1: keyword.control.rspec.example.ruby
       push:
-        - meta_scope: meta.rspec.example
+        - meta_scope: meta.rspec.example.ruby
         - match: '\b(do(?=\s*$))|{'
           captures:
             1: keyword.control.ruby.start-block
           pop: true
-        - include: scope:source.ruby
+        - include: embedded-expressions
+  
   subject-variable:
-    - match: '\b(subject|let|described_class)(?!\s*[{(])\b'
+    - match: '\b(subject|let|described_class)(?!\s*[{(]|\s+do\b)\b'
       captures:
-        1: variable.other.rspec
+        1: variable.other.rspec.ruby
